@@ -9,6 +9,8 @@ drawButton.addEventListener("click", drawRandomCards);
 sortButton.addEventListener("click", function() {
   selectionSort(cards);
 });
+let resetButton = document.querySelector(".resetBtn");
+resetButton.addEventListener("click", reset);
 
 // funcion cantidad de cartas aleatoria drawbutton
 let inputAmount = document.querySelector(".amount");
@@ -17,6 +19,9 @@ let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 
 function drawRandomCards() {
   let amount = parseInt(inputAmount.value);
+  let parent = document.querySelector(".cardsDiv");
+  parent.innerHTML = "";
+  cards = [];
   for (let i = 0; i < amount; i++) {
     let newCard = document.createElement("div");
     let cardSuit = randomSuitGenerator();
@@ -24,7 +29,6 @@ function drawRandomCards() {
     newCard.classList.add("card", "number", cardSuit);
     newCard.setAttribute("style", "display:flex;");
     newCard.innerHTML = changeValue(cardNumber);
-    let parent = document.querySelector(".cardsDiv");
     parent.append(newCard);
     cards.push({ cardSuit, cardNumber });
   }
@@ -54,11 +58,11 @@ function changeValue(value) {
 }
 // funcion orden de array para sortbutton
 
-let parent = document.querySelector(".sortDiv");
-
 const selectionSort = cards => {
   let min = 0;
   let count = 1;
+  let parent = document.querySelector(".sortDiv");
+  parent.innerHTML = "";
   while (min < cards.length - 1) {
     let newRow = document.createElement("div");
     newRow.setAttribute("style", "display:flex");
@@ -86,3 +90,11 @@ const selectionSort = cards => {
   console.log(cards);
   return cards;
 };
+
+function reset() {
+  let drawParent = document.querySelector(".cardsDiv");
+  drawParent.innerHTML = "";
+  let sortParent = document.querySelector(".sortDiv");
+  sortParent.innerHTML = "";
+  inputAmount.value = "";
+}
